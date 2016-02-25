@@ -1,0 +1,21 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 0.1
+apiversion: 2
+architectures: armeabi armeabi-v7a x86
+description: Titanium Module providing a generic implementation to request permissions
+author: Stefan Gross
+license: MIT License
+copyright: 2016
+
+# these should not be edited
+name: tipermissions
+moduleid: ti.permissions
+guid: 74cb2777-550a-4729-a27f-f013467f6529
+platform: android
+#
+# CAUTION: will require merged PR, proposed for SDK 5.2.x and not available yet 
+# so this minsdk has to be adjusted after release
+minsdk: 5.1.1.GA

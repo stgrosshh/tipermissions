@@ -1,1 +1,2 @@
 2016-02-25 version 0.1 - initial proof of concept release
+2016-02-26 version 0.2 - call callback even when access is already granted to allow cleaner caller implementation

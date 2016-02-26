@@ -180,10 +180,6 @@ public class TipermissionsModule extends KrollModule {
 			return false;
 		}
 
-		if (hasPermission(requestedPermission)) {
-			Log.d(LCAT, "Permission is already granted");
-			return true;
-		}
 
 		Activity activity = TiApplication.getAppCurrentActivity();
 

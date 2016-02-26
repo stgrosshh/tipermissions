@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 0.1
+version: 0.2
 apiversion: 2
 architectures: armeabi armeabi-v7a x86
 description: Titanium Module providing a generic implementation to request permissions
@@ -18,4 +18,4 @@ platform: android
 #
 # CAUTION: will require merged PR, proposed for SDK 5.2.x and not available yet 
 # so this minsdk has to be adjusted after release
-minsdk: 5.1.1.GA
+minsdk: 5.2.0.GA

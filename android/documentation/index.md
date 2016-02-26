@@ -2,7 +2,12 @@
 
 ## Description
 
-TODO: Enter your module description here
+Permission handling module to support Android 6.0 and above permission behaviour.
+
+Provides means to check and request permissions.
+Allows to invoke a callback function with the permission request result.
+So the App can react accordingly, when a dangerous permission has not been granted
+by the user.
 
 ## Accessing the tipermissions Module
 
@@ -14,26 +19,41 @@ The tipermissions variable is a reference to the Module object.
 
 ## Reference
 
-TODO: If your module has an API, you should document
-the reference here.
 
-### tipermissions.function
+### boolean tipermissions.hasPermission(permission)
 
-TODO: This is an example of a module function.
 
-### tipermissions.property
-
-TODO: This is an example of a module property.
 
 ## Usage
 
-TODO: Enter your usage example here
+First initialize the module with require as above.
+
+Call the requestPermission method, which is defined as follows:
+
+  boolean requestPermission("permission",requestCode, function(result){ do something })
+
+The permission paramter has to be a string with a permission as used in Manifest,
+e.g. "android.permission.WRITE_EXTERNAL_STORAGE".
+Permission parameter will be checked against available Android permissions.
+The module will return false, in case of an invalid permission.
+
+The requestCode parameter has to be a 8 Bit int and allows to correlation of the
+callback with a certain request. 
+
+The requestCode will be provided in the callback function's result parameter as
+result.requestCode. So you can use a central callback which handles
+all the requests if you like.
+
+Other result properties are:
+ success (boolean) 
+ code
+ message (in case of an error)
+
 
 ## Author
 
-TODO: Enter your author name, email and other contact
-details you want to share here.
+Stefan Gross https://github.com/stgrosshh
 
 ## License
 
-TODO: Enter your license/legal information here.
+MIT License

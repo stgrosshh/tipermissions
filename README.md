@@ -59,7 +59,8 @@ Other result properties are:
  message (in case of an error)
  permissions[] requested permissions
 
-
+# NOTE: requires integration of Pull Request #7778 ! 
+https://github.com/appcelerator/titanium_mobile/pull/7778
 
 ## Author
 

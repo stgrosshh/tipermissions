@@ -20,8 +20,17 @@ The tipermissions variable is a reference to the Module object.
 ## Reference
 
 
-### boolean tipermissions.hasPermission(permission)
+### Checking for permission
 
+boolean tipermissions.hasPermission(permission)
+
+### Requesting a single permission
+
+boolean tipermissions.requestPermission(String permission,int8 requestCode, fun callback(e))
+
+### Requesting multiple permissions
+
+boolean tipermissions.requestPermissions(String[] permission,int8 requestCode, fun callback(e))
 
 
 ## Usage
@@ -48,6 +57,8 @@ Other result properties are:
  success (boolean) 
  code
  message (in case of an error)
+ permissions[] requested permissions
+
 
 
 ## Author

@@ -164,14 +164,14 @@ public class TipermissionsModule extends KrollModule {
 	 * Request a permission and optionally register a callback for the current activity
 	 * 
 	 * @param requestedPermission permission as defined in Manifest
-	 * @param requestCode - 8 Bit value to associate callback with request
 	 * @param permissionCallback function called with result of permission prompt
+	 * @param requestCode - 8 Bit value to associate callback with request - if none is provided a system generated will used
 	 * @return true in case of valid request, false if requested permission is not a valid one
 	 */
 	@Kroll.method
 	public boolean requestPermission(String requestedPermission,
-			@Kroll.argument(optional = true) Integer requestCode,
-			@Kroll.argument(optional = true) KrollFunction permissionCallback) {
+			@Kroll.argument(optional = true) KrollFunction permissionCallback,
+			@Kroll.argument(optional = true) Integer requestCode) {
 
 		Log.d(LCAT, "Requesting permission: " + requestedPermission);
 
@@ -189,14 +189,15 @@ public class TipermissionsModule extends KrollModule {
 	 * Request a permission and optionally register a callback for the current activity
 	 * 
 	 * @param requestedPermissions Array of permissions as defined in Manifest
-	 * @param requestCode - 8 Bit value to associate callback with request
 	 * @param permissionCallback function called with result of permission prompt
+	 * @param requestCode - 8 Bit value to associate callback with request - if none is provided, a system generated one is used
 	 * @return true in case of valid request, false if requested permission is not a valid one
 	 */
 	@Kroll.method
 	public boolean requestPermissions(@Kroll.argument String[] requestedPerms,
-			@Kroll.argument(optional = true) Integer requestCode,
-			@Kroll.argument(optional = true) KrollFunction permissionCallback) {
+			@Kroll.argument(optional = true) KrollFunction permissionCallback,
+			@Kroll.argument(optional = true) Integer requestCode)
+			 {
 
 //		String[] requestedPermissions = new String[]{requestedPerms};//(String[])requestedPerms;
 		for(String permission:requestedPerms) {
@@ -224,8 +225,8 @@ public class TipermissionsModule extends KrollModule {
 		TiBaseActivity currentActivity = (TiBaseActivity) activity;
 		// Do we need a callback and request code in any case?
 		if (requestCode == null) {
-			Log.w(LCAT, "No request code given - this is not supported by Ti Permissions module");
-			return false;
+			Log.d(LCAT, "No request code given - Ti Permissions module will generate one");
+			requestCode = currentActivity.getUniqueResultCode();
 		}
 
 		// register callback in current activity

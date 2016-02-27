@@ -26,11 +26,11 @@ boolean tipermissions.hasPermission(permission)
 
 ### Requesting a single permission
 
-boolean tipermissions.requestPermission(String permission,int8 requestCode, fun callback(e))
+boolean tipermissions.requestPermission(String permission,fun callback(e), (optional) int8 requestCode)
 
 ### Requesting multiple permissions
 
-boolean tipermissions.requestPermissions(String[] permission,int8 requestCode, fun callback(e))
+boolean tipermissions.requestPermissions(String[] permission,fun callback(e), (optional) int8 requestCode )
 
 
 ## Usage
@@ -39,7 +39,7 @@ First initialize the module with require as above.
 
 Call the requestPermission method, which is defined as follows:
 
-  boolean requestPermission("permission",requestCode, function(result){ do something })
+  boolean requestPermission("permission",function(result){ do something })
 
 The permission paramter has to be a string with a permission as used in Manifest,
 e.g. "android.permission.WRITE_EXTERNAL_STORAGE".
@@ -57,7 +57,10 @@ Other result properties are:
  success (boolean) 
  code
  message (in case of an error)
+
+upcoming new pull request (still in development) will provide also:
  permissions[] requested permissions
+ denied[] denied permissions
 
 # NOTE: requires integration of Pull Request #7778 ! 
 https://github.com/appcelerator/titanium_mobile/pull/7778

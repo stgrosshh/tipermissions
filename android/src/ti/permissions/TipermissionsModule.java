@@ -28,6 +28,7 @@ import org.appcelerator.kroll.common.TiConfig;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -151,8 +152,8 @@ public class TipermissionsModule extends KrollModule {
 			return true;
 		}
 
-		Activity currentActivity = TiApplication.getAppCurrentActivity();
-		if (ContextCompat.checkSelfPermission(currentActivity,
+		Context ctx = TiApplication.getInstance().getApplicationContext(); 
+		if (ContextCompat.checkSelfPermission(ctx,
 				requestedPermission) != PackageManager.PERMISSION_GRANTED) {
 			return false;
 		}

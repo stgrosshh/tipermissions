@@ -1,4 +1,6 @@
 2016-02-25 version 0.1 - initial proof of concept release
 2016-02-26 version 0.2 - call callback even when access is already granted to allow cleaner caller implementation
 2016-02-26 version 0.3 - support for request of multiple permissions in one request
-2016-02-27 version 0.4 - changed parameter sequence in request API, requestCode is optional now 
+2016-02-27 version 0.4 - changed parameter sequence in request API, requestCode is optional now
+2016-03-10 version 0.5 - use application context instead of current activity for hasPermission to allow background service
+                         to check permissions 

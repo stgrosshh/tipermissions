@@ -1,3 +1,45 @@
+# OBSOLETE and ABANDONED 
+## Use new of API of Ti SDK 5.4.0 or later instead
+
+## NOTE (Implementation hints)
+
+After merging of PR #7778 the Appcelerator guys unfortunately decided
+to strip down the functionality of the implementation.
+
+So there is no way to support this module with the current API anymore :-(
+Sorry for that!
+
+The official API is now part of Ti.Android and can be used as follows:
+
+```javascript
+
+  // check permission
+
+  var storagePermission = "android.permission.READ_EXTERNAL_STORAGE";
+  var hasStoragePermission = Ti.Android.hasPermission(storagePermission);
+
+  // request permission
+
+  Ti.Android.requestPermissions(permissionsToRequest, function(e) {
+      if (e.success) {
+          Ti.API.info("SUCCESS");
+      } else {
+          Ti.API.info("ERROR: " + e.error);
+      }
+  });
+
+
+```
+
+### Breaking changes:
+* no checking of of parameters any longer, so you will get no hint in case of typos in permissions
+* you wil get the denied permissions as a comma separated string in the error property instead of having
+  clean permissions and denied properties in the result
+* you cannot provide a request code for correlation and processing in a central handler anymore, but a
+  fixed request code is used internally
+
+---
+
 # tipermissions Module
 
 ## Description

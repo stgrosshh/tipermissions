@@ -1,5 +1,5 @@
 # OBSOLETE and ABANDONED 
-## Use new of API of Ti SDK 5.4.0 or later instead
+## Use new API of Ti SDK 5.4.0 or later instead
 
 ## NOTE (Implementation hints)
 
@@ -32,7 +32,7 @@ The official API is now part of Ti.Android and can be used as follows:
 ```
 
 ### Breaking changes:
-* no checking of of parameters any longer, so you will get no hint in case of typos in permissions
+* no checking of parameters any longer, so you will get no hint in case of typos in permissions
 * you wil get the denied permissions as a comma separated string in the error property instead of having
   clean permissions and denied properties in the result
 * you cannot provide a request code for correlation and processing in a central handler anymore, but a

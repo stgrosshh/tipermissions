@@ -1,13 +1,5 @@
-# OBSOLETE and ABANDONED 
-## Use new API of Ti SDK 5.4.0 or later instead
-
-## NOTE (Implementation hints)
-
-After merging of PR #7778 the Appcelerator guys unfortunately decided
-to strip down the functionality of the implementation.
-
-So there is no way to support this module with the current API anymore :-(
-Sorry for that!
+# Ti.Permissions
+## If you can use Ti SDK 5.4.0 or later instead
 
 The official API is now part of Ti.Android and can be used as follows:
 
@@ -89,23 +81,20 @@ Permission parameter will be checked against available Android permissions.
 The module will return false, in case of an invalid permission.
 
 The requestCode parameter has to be a 8 Bit int and allows to correlation of the
-callback with a certain request. 
+callback with a certain request.
 
 The requestCode will be provided in the callback function's result parameter as
 result.requestCode. So you can use a central callback which handles
 all the requests if you like.
 
 Other result properties are:
- success (boolean) 
+ success (boolean)
  code
  message (in case of an error)
 
 upcoming new pull request (still in development) will provide also:
  permissions[] requested permissions
  denied[] denied permissions
-
-# NOTE: requires integration of Pull Request #7778 ! 
-https://github.com/appcelerator/titanium_mobile/pull/7778
 
 ## Author
 

@@ -1,9 +1,9 @@
 /**
  * Copyright (c) 2016 by Stefan Gross All Rights Reserved.
  * Licensed under the terms of the MIT License
- * 
+ *
  * Please see the LICENSE included with this distribution for details.
- * 
+ *
  * @author Stefan Gross https://github.com/stgrosshh
  *
  */
@@ -120,14 +120,14 @@ public class TipermissionsModule extends KrollModule {
 
 	/*
 	 * Deprecated permissions?
-	 * 
+	 *
 	 * android.permission.ACCESS_WIMAX_STATE - unknown
 	 * android.permission.CHANGE_WIMAX_STATE - unknown
 	 * android.permission.SUBSCRIBED_FEEDS_READ - unknown
 	 */
 
-	// requestCode key in callback result 
-	@Kroll.constant 
+	// requestCode key in callback result
+	@Kroll.constant
 	public static final String KEY_REQUEST_CODE = "requestCode";
 
 	public TipermissionsModule() {
@@ -139,7 +139,7 @@ public class TipermissionsModule extends KrollModule {
 
 	/**
 	 * check, if given permission is currently granted
-	 * 
+	 *
 	 * @param requestedPermission - permission as defined in Manifest
 	 * @return
 	 */
@@ -152,7 +152,7 @@ public class TipermissionsModule extends KrollModule {
 			return true;
 		}
 
-		Context ctx = TiApplication.getInstance().getApplicationContext(); 
+		Context ctx = TiApplication.getInstance().getApplicationContext();
 		if (ContextCompat.checkSelfPermission(ctx,
 				requestedPermission) != PackageManager.PERMISSION_GRANTED) {
 			return false;
@@ -163,7 +163,7 @@ public class TipermissionsModule extends KrollModule {
 
 	/**
 	 * Request a permission and optionally register a callback for the current activity
-	 * 
+	 *
 	 * @param requestedPermission permission as defined in Manifest
 	 * @param permissionCallback function called with result of permission prompt
 	 * @param requestCode - 8 Bit value to associate callback with request - if none is provided a system generated will used
@@ -171,8 +171,7 @@ public class TipermissionsModule extends KrollModule {
 	 */
 	@Kroll.method
 	public boolean requestPermission(String requestedPermission,
-			@Kroll.argument(optional = true) KrollFunction permissionCallback,
-			@Kroll.argument(optional = true) Integer requestCode) {
+			@Kroll.argument(optional = true) KrollFunction permissionCallback) {
 
 		Log.d(LCAT, "Requesting permission: " + requestedPermission);
 
@@ -182,13 +181,13 @@ public class TipermissionsModule extends KrollModule {
 			return false;
 		}
 
-		return handleRequest(new String[]{requestedPermission}, requestCode, permissionCallback);
+		return handleRequest(new String[]{requestedPermission}, permissionCallback);
 
 	}
 
 	/**
 	 * Request a permission and optionally register a callback for the current activity
-	 * 
+	 *
 	 * @param requestedPermissions Array of permissions as defined in Manifest
 	 * @param permissionCallback function called with result of permission prompt
 	 * @param requestCode - 8 Bit value to associate callback with request - if none is provided, a system generated one is used
@@ -196,11 +195,9 @@ public class TipermissionsModule extends KrollModule {
 	 */
 	@Kroll.method
 	public boolean requestPermissions(@Kroll.argument String[] requestedPerms,
-			@Kroll.argument(optional = true) KrollFunction permissionCallback,
-			@Kroll.argument(optional = true) Integer requestCode)
+			@Kroll.argument(optional = true) KrollFunction permissionCallback)
 			 {
 
-//		String[] requestedPermissions = new String[]{requestedPerms};//(String[])requestedPerms;
 		for(String permission:requestedPerms) {
 			Log.d(LCAT, "Requesting permission: " + permission);
 
@@ -211,35 +208,22 @@ public class TipermissionsModule extends KrollModule {
 			}
 		}
 
-		return handleRequest(requestedPerms, requestCode, permissionCallback);
+		return handleRequest(requestedPerms, permissionCallback);
 
-	}		
+	}
 
-	private boolean handleRequest(String[] permissions, Integer requestCode, KrollFunction permissionCallback) {
+	private boolean handleRequest(String[] permissions, KrollFunction permissionCallback) {
 		Activity activity = TiApplication.getAppCurrentActivity();
 
-		if (!(activity instanceof TiBaseActivity)) {
-			Log.w(LCAT,	"Requesting permission from non-Titanium activity - not supported");
-			return false;
+	  if (TiBaseActivity.cameraCallbackContext == null) {
+			TiBaseActivity.cameraCallbackContext = getKrollObject();
 		}
+		TiBaseActivity.cameraPermissionCallback = permissionCallback;
 
-		TiBaseActivity currentActivity = (TiBaseActivity) activity;
-		// Do we need a callback and request code in any case?
-		if (requestCode == null) {
-			Log.d(LCAT, "No request code given - Ti Permissions module will generate one");
-			requestCode = currentActivity.getUniqueResultCode();
-		}
 
-		// register callback in current activity
-		// TODO what is the exact purpose of the context? We should provide the Activity's Proxy, not the module object
-		KrollObject context = currentActivity.getActivityProxy().getKrollObject();
+		Activity currentActivity = TiApplication.getInstance().getCurrentActivity();
+		currentActivity.requestPermissions(permissions, TiC.PERMISSION_CODE_CAMERA);
 
-		Log.d(LCAT, "Registering callback");
-		currentActivity.registerPermissionRequestCallback(requestCode, 
-				permissionCallback, context,permissions);
-
-		Log.d(LCAT, "Calling permission request");
-		ActivityCompat.requestPermissions(activity,	permissions, requestCode);
 		return true;
 	}
 
